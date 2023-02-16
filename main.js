@@ -2,13 +2,13 @@
 const marginTop = 50;
 
 //scale to map original width to pixel width
-const lengthScale = d3.scaleLinear().domain([0,d3.max(summary,d=>d.total)]).range([0,720]);
+const lengthScale = d3.scaleLinear().domain([0,d3.max(summary,d=>Math.sqrt(d.total))]).range([0,620]);
 
 //add extra width variable to summary stats
 summary  = summary.map(d=>{
     return {
         ...d,
-        length: lengthScale(d.total),
+        length: lengthScale(Math.sqrt(d.total)),
     }
 })
 
