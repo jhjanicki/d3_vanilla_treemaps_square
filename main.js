@@ -62,7 +62,7 @@ const drawTree = (shape,svg,fill) =>{
     const root = treemap(hierarchyData);
     const leaves = root.leaves();
     const g = svg.append("g").attr("transform",`translate(0,${marginTop})`);
-    g.selectAll(`rect.${shape.order}`)
+    g.selectAll("rect")
         .data(leaves)
         .join("rect")
         .attr("class", shape.order)
@@ -76,15 +76,11 @@ const drawTree = (shape,svg,fill) =>{
         .attr("fill",  d=> d.data[0]==="EX" || d.data[0]==="EW" || d.data[0]==="CR" || d.data[0]==="EN" || d.data[0]==="VU"?textureScale(shape.order).url():fillColorScale(shape.order))
         .attr("opacity", 1);
 
-    g.selectAll(`text.text${shape.order}`)
+    g.selectAll("text")
         .data(root.leaves())
         .join("text")
-        .attr("class", `text${shape.order}`)
         .attr("x", d => d.x0 + 2)
         .attr("y", d => d.y0 + 10)
-        .attr("font-size", 12)
-        .attr("fill", "black")
-        .attr("font-weight", 700)
         .text(d => d.value>50?`${d.data[0]}: ${d.value}`:`${d.data[0]}`);
     
     svg.append("text").attr("x",0).attr("y",marginTop-5).attr("font-weight",700).attr("font-size", 15).text(`${shape.order}`);
@@ -100,7 +96,7 @@ summary.forEach(shape=>{
         for (let t of textureArray) {
             svg.call(t);
         }
-    
+
         drawTree(shape,svg,"#a8ddb5")
     
 })
